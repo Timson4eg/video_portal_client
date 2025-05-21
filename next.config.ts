@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+// /** @type {import('next').NextConfig} */
+const nextConfig = {
+	reactStrictMode: true,
+	poweredByHeader: false,
+	async rewrites() {
+		return [
+			{
+				source: '/uploads/:path*',
+				destination: `${process.env.SERVER_URL}/uploads/:path*`
+			}
+		]
+	}
+}
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+export default nextConfig
