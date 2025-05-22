@@ -10,8 +10,8 @@ import styles from './Layout.module.scss'
 
 export function Layout({ children }: PropsWithChildren<unknown>) {
 	const [isShowedSidebar, setIsShowedSideBar] = useState(true)
+
 	const toogleSidebar = () => {
-		console.log(styles.hidedSideBar)
 		setIsShowedSideBar(!isShowedSidebar)
 	}
 
@@ -19,13 +19,12 @@ export function Layout({ children }: PropsWithChildren<unknown>) {
 		<main
 			className={cn(
 				'flex min-h-screen',
+				styles.initialSidebar,
 				isShowedSidebar ? styles.showedSidebar : styles.hidedSidebar
 			)}
 		>
 			<SideBar toogleSidebar={toogleSidebar} />
-			<Content>
-				<section>{children}</section>
-			</Content>
+			<Content>{children}</Content>
 		</main>
 	)
 }

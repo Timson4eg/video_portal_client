@@ -13,8 +13,11 @@ const notoSans = Noto_Sans({
 })
 
 export const metadata: Metadata = {
-	title: 'RedVideo',
-	description: 'new videoApp'
+	title: {
+		absolute: 'Video Portal',
+		template: '%s | Video Portal'
+	},
+	description: 'Best app for video watching'
 }
 
 export default function RootLayout({

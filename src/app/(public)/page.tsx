@@ -1,5 +1,7 @@
 import { Flame } from 'lucide-react'
+import type { Metadata } from 'next'
 
+import { Heading } from '@/components/ui/Heading'
 import { VideoItem } from '@/components/ui/viedo-item/VideoItem'
 
 import { Explore } from './explore/Explore'
@@ -7,6 +9,18 @@ import { videoService } from '@/services/video.service'
 
 export const revalidate = 100
 export const dynamic = 'force-static'
+export const metadata: Metadata = {
+	title: 'VideoPortal',
+	description: 'best video platform',
+	alternates: {
+		canonical: '/'
+	},
+	openGraph: {
+		type: 'website',
+		url: '/',
+		title: 'Video Portal'
+	}
+}
 
 export default async function Home() {
 	const data = await videoService.getTrendingVideos()
@@ -15,8 +29,7 @@ export default async function Home() {
 	return (
 		<section>
 			<section>
-				<h2>Explore</h2>
-
+				<Heading Icon={Flame}>Trending</Heading>
 				<div className='grid grid-cols-6 gap-6 '>
 					{trendingVideos.length &&
 						trendingVideos.map(video => (
