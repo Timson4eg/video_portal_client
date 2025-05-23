@@ -29,15 +29,19 @@ export function VideoItem({ video, Icon }: Props) {
 			}}
 		>
 			<div className='relative mb-1.5'>
-				<Link href={PAGE.VIDEO(video.slug)}>
-					<Image
-						src={video.thumbnailUrl}
-						width={250}
-						height={140}
-						alt={video.title}
-						className='rounded-md'
-					></Image>
-				</Link>
+				<div className='relative aspect-[16/9] w-full max-w-[360px]'>
+					<Link href={PAGE.VIDEO(video.slug)}>
+						<Image
+							src={video.thumbnailUrl}
+							fill
+							// width={250}
+							// height={140}
+							alt={video.title}
+							className='rounded-md object-cover'
+						></Image>
+					</Link>
+				</div>
+
 				<Link
 					href={PAGE.CHANEL(video.channel.slug)}
 					className='absolute left-1.5 bottom-1.5'

@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/button/Button'
 import { Field } from '@/components/field/Field'
 import { Logo } from '@/components/layout/sideBar/header/Logo'
+import { SkeletonLoaader } from '@/components/ui/SkeletonLoaader'
 
-interface IAuthForm {
-	email: string
-	password: string
-	confirmPassword?: string
-}
+import { useAuthForm } from './useAuthForms'
+import type { IAuthForm } from '@/types/auth-form.types'
+
+import styles from './captcha.module.scss'
 
 export function Auth({}: IAuthForm) {
 	const [isLogin, setIsLogin] = useState(true)
@@ -19,14 +20,11 @@ export function Auth({}: IAuthForm) {
 		register,
 		handleSubmit,
 		formState: { errors },
-		watch
+		watch,
+		reset
 	} = useForm<IAuthForm>({ mode: 'onChange' })
 
-	const onSubmit: Submit<IAuthForm> = data => {
-		if (isLogin) {
-		} else {
-		}
-	}
+	const { onSubmit, isLoading, recaptchaRef } = useAuthForm(isLogin ? 'login' : 'register', reset)
 
 	return (
 		<div className='w-full h-screen flex justify-center items-center'>
@@ -55,35 +53,54 @@ export function Auth({}: IAuthForm) {
 					</button>
 				</div>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<Field
-						label='Email'
-						type='email'
-						placeholder='Email'
-						registration={register('email', { required: 'Email is required' })}
-						error={errors.email?.message}
-					/>
+					{isLoading ? (
+						<SkeletonLoaader count={4} />
+					) : (
+						<>
+							<Field
+								label='Email'
+								type='email'
+								placeholder='Email'
+								registration={register('email', { required: 'Email is required' })}
+								error={errors.email?.message}
+							/>
 
-					<Field
-						label='Password'
-						type='password'
-						placeholder='Password'
-						registration={register('password', { required: 'Password is required' })}
-						error={errors.password?.message}
-					/>
-					{!isLogin && (
-						<Field
-							label='Password confitmation'
-							type='password'
-							placeholder='Confirm Password'
-							registration={register('confirmPassword', {
-								required: 'Password confirmation is required',
-								validate: value => value === watch('password') || `Passwords don't mutch`
-							})}
-							error={errors.confirmPassword?.message}
-						/>
+							<Field
+								label='Password'
+								type='password'
+								placeholder='Password'
+								registration={register('password', { required: 'Password is required' })}
+								error={errors.password?.message}
+							/>
+							{!isLogin && (
+								<Field
+									label='Password confitmation'
+									type='password'
+									placeholder='Confirm Password'
+									registration={register('confirmPassword', {
+										required: 'Password confirmation is required',
+										validate: value => value === watch('password') || `Passwords don't mutch`
+									})}
+									error={errors.confirmPassword?.message}
+								/>
+							)}
+							<ReCAPTCHA
+								ref={recaptchaRef}
+								size='normal'
+								sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+								theme='light'
+								className={styles.recapcha}
+							/>
+						</>
 					)}
-					<div className='text-center mt-6'>
-						<Button type='submit'>{isLogin ? 'Enter' : 'Registration'}</Button>
+
+					<div className='text-center mt-4'>
+						<Button
+							type='submit'
+							isLoading={isLoading}
+						>
+							{isLogin ? 'Enter' : 'Registration'}
+						</Button>
 					</div>
 				</form>
 			</div>
