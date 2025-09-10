@@ -23,7 +23,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 		mutationFn: (data: IAuthData) => authService.main(type, data, recaptchaRef.current?.getValue())
 	})
 
-	const onSubmit: SubmitHandler<IAuthForm> = data => {
+	const onSubmit: SubmitHandler<IAuthForm> = ({ email, password }) => {
 		const token = recaptchaRef.current?.getValue()
 
 		if (!token) {
@@ -33,7 +33,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 			return
 		}
 
-		toast.promise(mutateAsync(data), {
+		toast.promise(mutateAsync({ email, password }), {
 			loading: 'loading...',
 			success: () => {
 				startTransition(() => {

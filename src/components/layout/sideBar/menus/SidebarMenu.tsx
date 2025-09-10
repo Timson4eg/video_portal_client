@@ -7,9 +7,10 @@ import { MenuItem } from './MenuItem'
 interface Props {
 	title?: string
 	menu: ISidebarItem[]
+	isShowedSidebar: boolean
 }
 
-export function SidebarMenu({ title, menu }: Props) {
+export function SidebarMenu({ title, menu, isShowedSidebar }: Props) {
 	const pathName = usePathname()
 
 	return (
@@ -21,6 +22,7 @@ export function SidebarMenu({ title, menu }: Props) {
 						key={menuItem.label}
 						item={menuItem}
 						isActive={!!match(menuItem.link)(pathName)}
+						isShowedSidebar={isShowedSidebar}
 					/>
 				))}
 			</ul>

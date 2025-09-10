@@ -8,7 +8,8 @@ export interface IUser {
 }
 
 export interface IFullUser extends IUser {
-	chanel: IChanel
+	channel: IChanel
 	subscriptions: IChanel[]
 	watchHistory: IWatchHistory
+	verificationToken?: string | null
 }

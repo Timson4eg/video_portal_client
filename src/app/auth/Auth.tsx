@@ -4,7 +4,7 @@ import { useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/buttons/Button'
 import { Field } from '@/components/field/Field'
 import { Logo } from '@/components/layout/sideBar/header/Logo'
 import { SkeletonLoaader } from '@/components/ui/SkeletonLoaader'

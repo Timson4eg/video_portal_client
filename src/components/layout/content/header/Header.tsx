@@ -1,6 +1,14 @@
+import dynamic from 'next/dynamic'
+
+import { SkeletonLoaader } from '@/components/ui/SkeletonLoaader'
+
 import { HeaderLinks } from './HeaderLinks'
 import { SearchField } from './SearchField'
-import { HeaderProfile } from './profile/HeaderProfile'
+
+const DynamicHeaderProfile = dynamic(
+	() => import('./profile/HeaderProfile').then(mod => mod.HeaderProfile),
+	{ ssr: false, loading: () => <SkeletonLoaader className='w-10 mb-0 rounded-md' /> }
+)
 
 export function Header() {
 	return (
@@ -8,7 +16,8 @@ export function Header() {
 			<SearchField />
 			<div className='flex items-center gap-6'>
 				<HeaderLinks />
-				<HeaderProfile />
+
+				<DynamicHeaderProfile />
 				{/* <HeaderLinks/> */}
 			</div>
 		</header>

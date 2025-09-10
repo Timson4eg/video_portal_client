@@ -1,23 +1,24 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import { LogIn } from 'lucide-react'
 
-import { STUDIO_PAGE } from '@/config/studio-page'
+import { LinkButton } from '@/components/buttons/LinkButton'
 
-interface Props {}
+import { PAGE } from '@/config/page.config'
 
-export function HeaderProfile({}: Props) {
-	return (
-		<Link
-			href={STUDIO_PAGE.SETTINGS}
-			className='shrink-0'
-		>
-			<Image
-				src='/image.png'
-				alt=''
-				width={40}
-				height={40}
-				className=' rounded-lg'
-			></Image>
-		</Link>
+import { HeaderAvatar } from './HeaderAvatar'
+import { useTypedSelector } from '@/store'
+
+export function HeaderProfile() {
+	const { isLoggedIn } = useTypedSelector(state => state.auth)
+
+	return isLoggedIn ? (
+		<HeaderAvatar />
+	) : (
+		<LinkButton href={PAGE.AUTH}>
+			<LogIn
+				size={20}
+				className='mr-2'
+			/>
+			Auth
+		</LinkButton>
 	)
 }

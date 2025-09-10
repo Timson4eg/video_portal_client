@@ -5,9 +5,11 @@ import Link from 'next/link'
 interface Props {
 	item: ISidebarItem
 	isActive: boolean
+	isShowedSidebar: boolean
 }
 
-export function MenuItem({ item, isActive }: Props) {
+export function MenuItem({ item, isActive, isShowedSidebar }: Props) {
+	// console.log(isShowedSidebar)
 	return (
 		<li className=''>
 			<Link
@@ -16,7 +18,8 @@ export function MenuItem({ item, isActive }: Props) {
 			>
 				<item.icon
 					className={cn('min-w-6', {
-						'group-hover:text-primary transition group-hover:-rotate-6': !isActive
+						'group-hover:text-primary transition group-hover:-rotate-6': !isActive,
+						'text-red-400': isActive && !isShowedSidebar
 					})}
 				/>
 				<span
