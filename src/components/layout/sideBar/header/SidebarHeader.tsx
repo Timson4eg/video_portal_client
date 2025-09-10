@@ -1,8 +1,6 @@
-import { COLORS } from '@constants/color.constants'
-import { Menu, SquarePlay } from 'lucide-react'
-import Link from 'next/link'
+import { Menu } from 'lucide-react'
 
-import { PAGE } from '@/config/page.config'
+import { Logo } from './Logo'
 
 export function SidebarHeader({ toogleSidebar }: { toogleSidebar: () => void }) {
 	return (
@@ -13,16 +11,7 @@ export function SidebarHeader({ toogleSidebar }: { toogleSidebar: () => void }) 
 			>
 				<Menu />
 			</button>
-			<Link
-				href={PAGE.HOME}
-				className='flex items-center gap-5'
-			>
-				<SquarePlay
-					color={COLORS.primary}
-					size={30}
-				/>
-				<span className='font-medium text-xl'>RED Video</span>
-			</Link>
+			<Logo />
 		</div>
 	)
 }
